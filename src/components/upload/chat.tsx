@@ -1,6 +1,3 @@
-import React from 'react'
-
-
 const initialEntries = [
     'Show me a full estimate for this job.',
     'Estimate total cost.',

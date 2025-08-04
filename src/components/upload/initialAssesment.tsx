@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
 import Preview from "./preview";
 
@@ -39,7 +38,7 @@ interface InitialAssesmentProps {
 const InitialAssesment: React.FC<InitialAssesmentProps> = ({ setFile }) => {
 
   const [initialEstimate, setInitialEstimate] = useState("");
-  const [fileName, setFileName] = useState<string>(
+  const [fileName] = useState<string>(
     localStorage.getItem("uploadedFile") || ""
   );
 
