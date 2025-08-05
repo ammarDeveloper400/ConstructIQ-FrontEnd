@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from "react";
 import ConstructIQLogo from "../logo";
-import ChatComponent from "./chat";
+import ChatComponent from "./chat.jsx";
 
 type UploadLayoutProps = {
   children: ReactNode;
@@ -15,10 +15,11 @@ const UploadLayout: React.FC<UploadLayoutProps> = ({
   chatLayout = false,
 }) => {
   const [messageInput, setMessageInput] = useState("");
-
+  const [messageSend, setMessageSend] = useState("");
   const handleSend = () => {
     console.log("Sending message:", messageInput);
-    setMessageInput(""); // Clear the input field
+    setMessageInput(messageSend);
+    setMessageSend("");
   };
 
   return (
@@ -32,7 +33,11 @@ const UploadLayout: React.FC<UploadLayoutProps> = ({
 
         {chatLayout && (
           <div>
-            <ChatComponent messageInput={messageInput} msgType={1} msgAgent="user" />
+            <ChatComponent
+              messageInput={messageInput}
+              msgType={1}
+              msgAgent="user"
+            />
           </div>
         )}
       </div>
@@ -43,8 +48,14 @@ const UploadLayout: React.FC<UploadLayoutProps> = ({
             className="border border-black dark:border-white opacity-50 w-full h-13 px-4 text-black dark:text-white rounded-sm"
             type="text"
             placeholder="Ask anything.."
-            value={messageInput}
-            onChange={(e) => setMessageInput(e.target.value)}
+            value={messageSend}
+            onChange={(e) => setMessageSend(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleSend();
+              }
+            }}
           />
           <svg
             xmlns="http://www.w3.org/2000/svg"

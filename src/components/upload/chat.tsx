@@ -1,152 +1,65 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-// import { useEffect, useState } from "react";
 
-// export interface ChatMessage {
-//   id: number;
-//   type: number;
-//   content: string[]; // Always an array of strings
-//   agent: string;
-//   time: string;
-// }
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 
-// const initialEntries = [
-//   "Show me a full estimate for this job.",
-//   "Estimate total cost.",
-//   "Estimate total time.",
-// ];
-
-// const Chat = ({messageInput, msgType, msgAgent}) => {
-//   const [history, setHistory] = useState<ChatMessage[]>([]);
-//   const [input, setInput] = useState("");
-
-//   useEffect(() => {
-//     const now = new Date().toISOString();
-
-//     const initialMessage: ChatMessage = {
-//       id: 1,
-//       type: 1,
-//       content: initialEntries,
-//       agent: "system",
-//       time: now,
-//     };
-
-//     setHistory([initialMessage]);
-//   }, []);
-
-//   useEffect(() => {
-//     handleSend({type: msgType, agent: msgAgent});
-//   }, [messageInput]);
-
-//   const handleSend = ({type, agent}: {type: number; agent: string}) => {
-//     if (!input.trim()) return;
-
-//     const newMessage: ChatMessage = {
-//       id: history.length + 1,
-//       type: type,
-//       content: [input.trim()],
-//       agent: agent,
-//       time: new Date().toISOString(),
-//     };
-
-//     setHistory((prev) => [...prev, newMessage]);
-//     setInput("");
-//   };
-
-//   const SystemMessages = ({
-//     content,
-//     type,
-//     agent,
-//   }: {
-//     content: string[];
-//     type: number;
-//     agent: string;
-//   }) => {
-//     return (
-//       <div className="mb-4">
-//         {type === 1 && (
-//           <div className="flex flex-wrap justify-center items-center gap-4">
-//             {content.map((value, idx) => (
-//               <div
-//                 onClick={() => handleSend(type, agent)}
-//                 key={idx}
-//                 className="border-2 border-[#5CA9FF] px-4 py-2 text-black cursor-pointer dark:text-white rounded-md font-semibold text-[16px]"
-//               >
-//                 {value}
-//               </div>
-//             ))}
-//           </div>
-//         )}
-//       </div>
-//     );
-//   };
-
-//   return (
-//     <div className="text-white p-4 space-y-4">
-//       {/* Chat history */}
-//       {history.map((msg) => (
-//         // <div key={msg.id} className="bg-[#1f2937] p-3 rounded-md">
-//         //   <p className="font-semibold text-[#5CA9FF]">{msg.agent}</p>
-
-//         //   {/* Show cards for system messages */}
-//         //   {msg.type === 1 && msg.agent === "system" ? (
-//         //     <SystemMessages content={msg.content} />
-//         //   ) : (
-//         //     <ul className="ml-4 list-disc">
-//         //       {msg.content.map((line, i) => (
-//         //         <li key={i}>{line}</li>
-//         //       ))}
-//         //     </ul>
-//         //   )}
-
-//         //   <small className="text-gray-400 block mt-1 text-xs">
-//         //     {new Date(msg.time).toLocaleTimeString()}
-//         //   </small>
-//         // </div>
-
-//         <>
-//           {msg.agent === "system" && (
-//             <SystemMessages
-//               type={msg.type}
-//               agent="system"
-//               content={msg.content}
-//             />
-//           )}
-//         </>
-//       ))}
-
-//       {/* Input field */}
-//       <div className="flex gap-2">
-//         <input
-//           type="text"
-//           className="flex-1 p-2 rounded-md bg-[#374151] text-white"
-//           placeholder="Type your message..."
-//           value={input}
-//           onChange={(e) => setInput(e.target.value)}
-//         //   onKeyDown={(e) => e.key === "Enter" && handleSend()}
-//         />
-//         <button
-//         //   onClick={handleSend}
-//           className="bg-[#5CA9FF] px-4 py-2 rounded-md text-black font-bold"
-//         >
-//           Send
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Chat;
-
-
-
-
+// src/components/upload/chat.Jsx
 
 import { useEffect, useRef, useState } from "react";
+
+const EstimateJason = {
+  project_id: "austin-001234",
+  city: "Austin",
+  zip_code: "78701",
+  permit_type: "HVAC",
+  project_scope: "Multifamily Retrofit",
+  project_subtype: "Mechanical Systems",
+  issue_date: "2023-06-15",
+  valuation: 210000,
+  valuation_source: "official_record",
+  valuation_confidence_score: 0.92,
+  valuation_method: "official",
+  cq_estimated_value: {
+    generated: false,
+    fallback_used: false,
+    method: null,
+    notes: null,
+  },
+  risk_flags: ["high_fee_variance", "missing_scope_notes"],
+  summary: {
+    valuation_range: {
+      min: 180000,
+      max: 250000,
+    },
+    median_permit_value: 212000,
+    mean_permit_value: 218500,
+  },
+  line_items: [
+    {
+      category: "Labor",
+      description: "HVAC crew installation (multifamily, 4 floors)",
+      estimated_cost: 67000,
+    },
+    {
+      category: "Materials",
+      description: "Ducting, thermostats, zone controls",
+      estimated_cost: 38000,
+    },
+    {
+      category: "Equipment",
+      description: "Commercial HVAC units (RTUs, VAVs)",
+      estimated_cost: 75000,
+    },
+  ],
+  confidence_score_overall: 0.91,
+  agent_name: "BidSmart",
+  data_timestamp: "2025-08-04T12:00:00Z",
+};
 
 export interface ChatMessage {
   id: number;
   type: number;
-  content: string[];
+  content: (string | object)[];
   agent: string;
   time: string;
 }
@@ -185,7 +98,6 @@ const Chat = ({ messageInput, msgType, msgAgent }: ChatProps) => {
     }
   }, [messageInput]);
 
-  // Scroll to bottom when history updates
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [history]);
@@ -200,10 +112,131 @@ const Chat = ({ messageInput, msgType, msgAgent }: ChatProps) => {
     };
 
     setHistory((prev) => [...prev, newMessage]);
+
+    setTimeout(() => {
+      const responseMessage: ChatMessage = {
+        id: history.length + 2,
+        type: 3,
+        content: [EstimateJason],
+        agent: "AI",
+        time: new Date().toISOString(),
+      };
+      setHistory((prev) => [...prev, responseMessage]);
+    }, 1000);
   };
 
   const handleSystemClick = (value: string, type: number, agent: string) => {
     sendMessage(value, type, agent);
+  };
+
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      maximumFractionDigits: 0
+    }).format(amount);
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
+  const renderJsonData = (data) => {
+    return (
+      <div className="bg-[#161D26]  rounded-lg p-4 text-sm">
+        {/* Project Header */}
+        <div className="mb-6">
+          <h3 className="text-lg font-bold text-blue-300 mb-2">Project Estimate</h3>
+          <div className="grid grid-cols-2 gap-2">
+            <div>
+              <p className="text-gray-400">Project ID</p>
+              <p className="font-mono">{data.project_id}</p>
+            </div>
+            <div>
+              <p className="text-gray-400">Location</p>
+              <p>{data.city}, {data.zip_code}</p>
+            </div>
+            <div>
+              <p className="text-gray-400">Permit Type</p>
+              <p>{data.permit_type}</p>
+            </div>
+            <div>
+              <p className="text-gray-400">Issue Date</p>
+              <p>{formatDate(data.issue_date)}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Valuation Section */}
+        <div className="mb-6 p-4 bg-[#3F4854] rounded-lg">
+          <h4 className="font-bold text-blue-200 mb-3">Valuation Summary</h4>
+          <div className="grid grid-cols-3 gap-4 mb-3">
+            <div className="bg-[#161D26] p-3 rounded">
+              <p className="text-gray-400 text-xs">Total Valuation</p>
+              <p className="text-xl font-bold">{formatCurrency(data.valuation)}</p>
+            </div>
+            <div className="bg-[#161D26] p-3 rounded">
+              <p className="text-gray-400 text-xs">Confidence</p>
+              <p className="text-xl font-bold">{(data.valuation_confidence_score * 100).toFixed(0)}%</p>
+            </div>
+            <div className="bg-[#161D26] p-3 rounded">
+              <p className="text-gray-400 text-xs">Valuation Range</p>
+              <p className="text-sm">
+                {formatCurrency(data.summary.valuation_range.min)} - {formatCurrency(data.summary.valuation_range.max)}
+              </p>
+            </div>
+          </div>
+          <div className="text-xs text-gray-400">
+            <p>Source: {data.valuation_source.replace('_', ' ')}</p>
+            <p>Method: {data.valuation_method}</p>
+          </div>
+        </div>
+
+        {/* Line Items */}
+        <div className="mb-6">
+          <h4 className="font-bold text-blue-200 mb-3">Cost Breakdown</h4>
+          <div className="space-y-3">
+            {data.line_items.map((item, index: number) => (
+              <div key={index} className="flex justify-between items-center bg-[#3F4854] p-3 rounded">
+                <div>
+                  <p className="font-medium">{item.category}</p>
+                  <p className="text-xs text-gray-400">{item.description}</p>
+                </div>
+                <p className="font-bold">{formatCurrency(item.estimated_cost)}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 pt-3 border-t border-gray-600 flex justify-between font-bold text-lg">
+            <span>Total Estimated Cost</span>
+            <span>{formatCurrency(data.valuation)}</span>
+          </div>
+        </div>
+
+        {/* Additional Info */}
+        <div className="grid grid-cols-2 gap-4 text-xs">
+          <div>
+            <p className="text-gray-400">Risk Flags</p>
+            <div className="flex flex-wrap gap-1 mt-1">
+              {data.risk_flags.map((flag: string, index: number) => (
+                <span key={index} className="bg-red-900/50 text-red-300 px-2 py-1 rounded">
+                  {flag.replace(/_/g, ' ')}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div>
+            <p className="text-gray-400">Generated By</p>
+            <p>{data.agent_name}</p>
+            <p className="text-gray-400 mt-1">Generated On</p>
+            <p>{formatDate(data.data_timestamp)}</p>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   const SystemMessages = ({
@@ -232,7 +265,7 @@ const Chat = ({ messageInput, msgType, msgAgent }: ChatProps) => {
   );
 
   return (
-    <div className="text-white p-4 space-y-4 max-h-[400px] overflow-y-auto">
+    <div className="text-white space-y-4 overflow-y-auto">
       {/* Chat history */}
       {history.map((msg) => (
         <div key={msg.id}>
@@ -244,17 +277,29 @@ const Chat = ({ messageInput, msgType, msgAgent }: ChatProps) => {
             />
           ) : (
             <div
-              className={`flex flex-col max-w-[300px] ${
+              className={`flex flex-col ${
                 msg.agent === "user"
                   ? "justify-end ml-auto text-right items-end"
                   : "justify-start items-start"
               }`}
             >
-              <div className="bg-[#3F4854] rounded-md px-4 py-2">
+              <div className={` ${msg.agent === "user" ? "bg-[#3F4854] px-4 py-2"  : "max-w-full"} rounded-md `}>
                 {msg.content.map((line, i) => (
-                  <p key={i} className="text-white">
-                    {line}
-                  </p>
+                  <div key={i}> 
+                    {msg.type === 2 ? (
+                      <p className="text-white whitespace-pre-wrap text-left break-words">
+                        {typeof line === "string" ? line : JSON.stringify(line, null, 2)}
+                      </p>
+                    ) : (
+                      typeof line === "string" ? (
+                        <p className="text-white whitespace-pre-wrap text-left break-words">
+                          {line}
+                        </p>
+                      ) : (
+                        renderJsonData(line)
+                      )
+                    )}
+                  </div>
                 ))}
               </div>
               <small className="text-gray-400 block mt-1 text-xs">

@@ -98,7 +98,7 @@ const Preview: React.FC<PreviewProps> = ({
 
       {/* ✅ File Card */}
       {jasonData && (
-        <div className="bg-[#161D26] rounded-t-[8px] flex items-center gap-4 p-4 px-4 text-white text-sm mb-0 capitalize">
+        <div className=" bg-[#161D26] rounded-t-[8px] flex items-center gap-4 p-4 px-4 text-white text-sm mb-0 capitalize">
           <p>{projectTypes}</p>
           <p className="pr-4 border-r border-[#666a70]">{scopes}</p>
           <p className="">{zipCode}</p>
