@@ -11,11 +11,10 @@
 // const FileUpload: React.FC<FileUploadProps> = ({ file, setFile }) => {
 //   const [isDragging, setIsDragging] = useState(false);
 
-
 //   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
 //     const uploaded = e.target.files?.[0];
 //     if (uploaded) {
-      
+
 //       if (uploaded.type === "application/pdf") {
 //         localStorage.setItem("uploadedFile", uploaded.name);
 //         localStorage.setItem("uploadedFileTags", "#investment1, #construction");
@@ -57,7 +56,7 @@
 //         onDrop={handleDrop}
 //         onDragOver={handleDragOver}
 //         onDragLeave={handleDragLeave}
-//         className={`transition-all duration-200 h-40 border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center cursor-pointer 
+//         className={`transition-all duration-200 h-40 border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center cursor-pointer
 //           ${isDragging ? "border-[#8F8F8F]" : "border-[#8F8F8F]"}
 //           hover:border-[#8F8F8F]`}
 //       >
@@ -90,11 +89,11 @@
 
 // export default FileUpload;
 
-
 import React, { useState, ChangeEvent, DragEvent } from "react";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import { MdOutlineFileUpload } from "react-icons/md";
+import { useNavigate } from "react-router";
 
 type FileUploadProps = {
   file: File | null;
@@ -103,7 +102,8 @@ type FileUploadProps = {
 
 const FileUpload: React.FC<FileUploadProps> = ({ file, setFile }) => {
   const [isDragging, setIsDragging] = useState(false);
-  const MAX_FILE_SIZE = 10 * 1024 * 1024; 
+  const navigate = useNavigate();
+  const MAX_FILE_SIZE = 10 * 1024 * 1024;
 
   const validateFile = (uploadedFile: File): boolean => {
     // Check file type
@@ -111,25 +111,34 @@ const FileUpload: React.FC<FileUploadProps> = ({ file, setFile }) => {
       toast.error("Only PDF files are allowed.");
       return false;
     }
-    
+
     // Check file size
     if (uploadedFile.size > MAX_FILE_SIZE) {
       toast.error("File size exceeds 10MB limit.");
       return false;
     }
-    
+
     return true;
   };
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const uploaded = e.target.files?.[0];
     if (uploaded) {
+      console.log("uploaded", uploaded);
+
       if (validateFile(uploaded)) {
         localStorage.setItem("uploadedFile", uploaded.name);
         localStorage.setItem("uploadedFileTags", "#investment1, #construction");
-        setFile(uploaded);
+        const metadata = {
+          name: uploaded.name,
+          size: uploaded.size,
+          type: uploaded.type,
+          lastModified: uploaded.lastModified,
+        };
+        localStorage.setItem("uploadedFileMeta", JSON.stringify(metadata));
+        navigate('/c')
       } else {
-        e.target.value = ""; // Reset the input
+        e.target.value = ""; 
       }
     }
   };

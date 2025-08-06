@@ -42,17 +42,17 @@ const UploadProgress: React.FC<UploadProgressProps> = ({ setInitialScreenning })
         {statusMessage}
       </p>
 
-      <div className="relative w-100 h-100 bg-[#161D26] rounded-xl flex items-center justify-center">
+      <div className="relative w-100 h-100 dark:bg-[#161D26] border border-[#d2d2d2] shadow-lg rounded-xl flex items-center justify-center">
         <div className="flex flex-col items-center">
-          <FiUpload className="text-white text-3xl mb-2" />
-          <p className="text-white text-xl font-medium">{percent}%</p>
+          <FiUpload className="dark:text-white text-black text-3xl mb-2" />
+          <p className="dark:text-white text-black text-xl font-medium">{percent}%</p>
           <p className="text-gray-400 text-sm">
             {uploaded}/{totalSize}kb
           </p>
         </div>
       </div>
 
-      <div className="w-100 h-[6px] bg-gray-800 rounded-full">
+      <div className="w-100 h-[6px] dark:bg-gray-800 bg-gray-200 rounded-full">
         <div
           className="h-full bg-green-500 rounded-full transition-all duration-300"
           style={{ width: `${percent}%` }}

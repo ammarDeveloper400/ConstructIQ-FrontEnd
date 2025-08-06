@@ -5,6 +5,7 @@ import { RxCross2 } from "react-icons/rx";
 import Input from "../form/input/InputField";
 import Select from "../form/Select";
 import Button from "../ui/button/Button";
+import { useNavigate } from "react-router";
 
 type PreviewProps = {
   file: any;
@@ -14,17 +15,17 @@ type PreviewProps = {
 };
 
 const Preview: React.FC<PreviewProps> = ({
-  file,
-  setFile,
   setUploadProcessing,
   jasonData,
 }) => {
+  const navigate = useNavigate();
   const [zip, setZip] = useState("");
   const [reTag, setReTag] = useState(false);
   const [tags, setTags] = useState<string>("#investment1, #construction");
   const [projectType, setProjectType] = useState("");
   const [scope, setScope] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
+  const [file, setFile] = useState<any>("");
   // console.log("jasonData", jasonData);
 
   // const [data, setData] = useState<any>(null);
@@ -39,6 +40,12 @@ const Preview: React.FC<PreviewProps> = ({
   };
 
   useEffect(() => {
+    const fileName = localStorage.getItem("uploadedFileMeta");
+    if (fileName) {
+      const FileName = JSON.parse(fileName);
+
+      setFile(FileName);
+    }
     const fileTags = localStorage.getItem("uploadedFileTags");
     if (fileTags) {
       setTags(fileTags);
@@ -98,23 +105,29 @@ const Preview: React.FC<PreviewProps> = ({
 
       {/* ✅ File Card */}
       {jasonData && (
-        <div className=" bg-[#161D26] rounded-t-[8px] flex items-center gap-4 p-4 px-4 text-white text-sm mb-0 capitalize">
-          <p>{projectTypes}</p>
-          <p className="pr-4 border-r border-[#666a70]">{scopes}</p>
-          <p className="">{zipCode}</p>
+        <div className=" dark:bg-[#161D26]  bg-[#fff] dark:border-0 border border-[#d2d2d2] rounded-t-[8px]  flex items-center gap-4 p-4 px-4 text-white text-sm mb-0 capitalize">
+          <p className="dark:text-white text-black">{projectTypes}</p>
+          <p className="pr-4 border-r border-[#666a70] dark:text-white text-black">
+            {scopes}
+          </p>
+          <p className="dark:text-white text-black">{zipCode}</p>
         </div>
       )}
       <div
-        className={`flex flex-col justify-center  bg-[#3F4854] ${
+        className={`flex flex-col justify-center  dark:bg-[#3F4854] bg-[#fff] dark:border-0 border border-[#d2d2d2] border-t-0 ${
           jasonData === null ? "rounded-[8px]" : "rounded-t-[0px]"
         } rounded-[8px] px-3 py-3`}
       >
         <div className="flex items-center justify-between  flex-col md:flex-row gap-2">
           <div className="flex items-start gap-1 w-full md:w-auto">
-            <CiFileOn size={32} color="white" />
+            <CiFileOn size={32} className="text-[#4a8ea3] dark:white" />
             <div className="flex flex-col gap-[2px]">
-              <p className="text-white text-[14px] font-bold w-[190px] truncate">
-                {file.name}
+              <p className="dark:text-white text-gray-800 text-[14px] font-bold w-[190px] truncate">
+                {typeof file === "object" && file !== null && "name" in file
+                  ? file.name
+                  : typeof file === "string"
+                  ? file
+                  : ""}
               </p>
 
               {reTag ? (
@@ -131,14 +144,14 @@ const Preview: React.FC<PreviewProps> = ({
                   />
                 </div>
               ) : (
-                <p className="text-white text-[12px]">{tags}</p>
+                <p className="dark:text-white text-gray-600 text-[12px]">{tags}</p>
               )}
             </div>
           </div>
 
           <div className="flex gap-3 items-center justify-between w-full md:w-auto">
             <div className="flex gap-3 items-center text-xs font-medium text-[#5CA9FF]">
-              <button onClick={() => setFile(null)}>Reupload</button>
+              <button onClick={() => navigate("/")}>Reupload</button>
               <span className="border-l border-[#666a70] h-4" />
               <button>Rename</button>
               <span className="border-l border-[#666a70] h-4" />
@@ -148,7 +161,7 @@ const Preview: React.FC<PreviewProps> = ({
             </div>
             <button>
               <RxCross2
-                onClick={() => setFile(null)}
+                onClick={() => navigate("/")}
                 color="#5CA9FF"
                 size={20}
               />
@@ -157,12 +170,12 @@ const Preview: React.FC<PreviewProps> = ({
         </div>
 
         {jasonData !== null && (
-          <div className="border-t-2 mt-2 border-[#666a70] pt-2">
+          <div className="border-t-2 mt-2 dark:border-[#666a70] pt-2">
             <div className="flex flex-col justify-center items-center gap-1">
-              <p className="text-[14px] text-white opacity-70">
+              <p className="text-[14px] dark:text-white opacity-70">
                 I’ve reviewed your plan:
               </p>
-              <p className="text-[14px] font-bold text-white">
+              <p className="text-[14px] font-bold dark:text-white">
                 ⚠ 92% Confident, Outlier Scope
               </p>
               <div className=" bg-[#1B2430] border-2 border-[#1B2430] rounded-full h-[8px] mt-1 mb-2 md:w-[50%] w-[80%]">
@@ -171,18 +184,18 @@ const Preview: React.FC<PreviewProps> = ({
                   style={{ width: "92%" }}
                 ></div>
               </div>
-              <p className="text-[14px] font-bold text-white">
+              <p className="text-[14px] font-bold dark:text-white">
                 🔍 Key Project Details (from Page 1):
               </p>
             </div>
 
             <div className="">
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-3 border-b-2 border-[#666a70] pb-4">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-3 border-b-2 dark:border-[#666a70] pb-4">
                 {projectDetails &&
                   projectDetails.map((item: any, index: any) => (
                     <div
                       key={index}
-                      className="bg-[#1B2430] h-[170px] text-white p-3 rounded-md text-center flex flex-col justify-center"
+                      className="dark:bg-[#1B2430] shadow-md dark:border-0 border border-[#d2d2d2] h-[170px] dark:text-white p-3 rounded-md text-center flex flex-col justify-center"
                     >
                       <p className="text-[32px] font-bold leading-none">
                         {item.value?.split(" ")[0]}
@@ -199,7 +212,7 @@ const Preview: React.FC<PreviewProps> = ({
                   ))}
               </div>
 
-              <div className="flex flex-wrap justify-center gap-3 pt-4 text-white font-bold pb-2 text-[14px]">
+              <div className="flex flex-wrap justify-center gap-3 pt-4 dark:text-white font-bold pb-2 text-[14px]">
                 <p>Value Core: Avg: $185K</p>
                 <p className="pl-3 border-l border-[#666a70]">Median: $172K</p>
                 <p className="pl-3 border-l border-[#666a70]">

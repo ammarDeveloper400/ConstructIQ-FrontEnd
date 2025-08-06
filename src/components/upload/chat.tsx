@@ -149,53 +149,67 @@ const Chat = ({ messageInput, msgType, msgAgent }: ChatProps) => {
 
   const renderJsonData = (data) => {
     return (
-      <div className="bg-[#161D26]  rounded-lg p-4 text-sm">
+      <div className="dark:bg-[#161D26] border border=[#d2d2d2] dark:border-0 rounded-lg p-4 text-sm">
         {/* Project Header */}
         <div className="mb-6">
-          <h3 className="text-lg font-bold text-blue-300 mb-2">
+          <h3 className="text-lg font-bold text-black dark:text-blue-300 mb-2">
             Project Estimate
           </h3>
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <p className="text-gray-400">Project ID</p>
-              <p className="font-mono">{data.project_id}</p>
+              <p className="dark:text-gray-400 text-gray-800">Project ID</p>
+              <p className="text-gray-400 dark:text-[#fff]">
+                {data.project_id}
+              </p>
             </div>
             <div>
-              <p className="text-gray-400">Location</p>
-              <p>
+              <p className="dark:text-gray-400 text-gray-800">Location</p>
+              <p className="text-gray-400 dark:text-[#fff]">
                 {data.city}, {data.zip_code}
               </p>
             </div>
             <div>
-              <p className="text-gray-400">Permit Type</p>
-              <p>{data.permit_type}</p>
+              <p className="dark:text-gray-400 text-gray-800">Permit Type</p>
+              <p className="text-gray-400 dark:text-[#fff]">
+                {data.permit_type}
+              </p>
             </div>
             <div>
-              <p className="text-gray-400">Issue Date</p>
-              <p>{formatDate(data.issue_date)}</p>
+              <p className="dark:text-gray-400 text-gray-800">Issue Date</p>
+              <p className="text-gray-400 dark:text-[#fff]">
+                {formatDate(data.issue_date)}
+              </p>
             </div>
           </div>
         </div>
 
         {/* Valuation Section */}
-        <div className="mb-6 p-4 bg-[#3F4854] rounded-lg">
-          <h4 className="font-bold text-blue-200 mb-3">Valuation Summary</h4>
+        <div className="mb-6 p-4 dark:bg-[#3F4854] dark:border-0 border border-[#d2d2d2] shadow-md rounded-lg">
+          <h4 className="font-bold text-black dark:text-blue-200 mb-3">
+            Valuation Summary
+          </h4>
           <div className="grid md:grid-cols-3 grid-cols-2 md:gap-4 gap-2 mb-3">
-            <div className="bg-[#161D26] p-3 rounded">
-              <p className="text-gray-400 text-xs">Total Valuation</p>
-              <p className="text-xl font-bold">
+            <div className="dark:bg-[#161D26] dark:border-0 shadow-md border border-[#d2d2d2] p-3 rounded">
+              <p className="dark:text-gray-400 text-gray-600 text-xs">
+                Total Valuation
+              </p>
+              <p className="text-xl font-bold text-black dark:text-[#fff]">
                 {formatCurrency(data.valuation)}
               </p>
             </div>
-            <div className="bg-[#161D26] p-3 rounded">
-              <p className="text-gray-400 text-xs">Confidence</p>
-              <p className="text-xl font-bold">
+            <div className="dark:bg-[#161D26] dark:border-0 shadow-md border border-[#d2d2d2]  p-3 rounded">
+              <p className="dark:text-gray-400 text-gray-600 text-xs">
+                Confidence
+              </p>
+              <p className="text-xl font-bold text-black dark:text-[#fff]">
                 {(data.valuation_confidence_score * 100).toFixed(0)}%
               </p>
             </div>
-            <div className="bg-[#161D26] p-3 rounded">
-              <p className="text-gray-400 text-xs">Valuation Range</p>
-              <p className="text-sm">
+            <div className="dark:bg-[#161D26] dark:border-0 shadow-md border border-[#d2d2d2] p-3 rounded">
+              <p className="dark:text-gray-400 text-gray-600 text-xs">
+                Valuation Range
+              </p>
+              <p className="text-sm text-black dark:text-[#fff]">
                 {formatCurrency(data.summary.valuation_range.min)} -{" "}
                 {formatCurrency(data.summary.valuation_range.max)}
               </p>
@@ -209,15 +223,17 @@ const Chat = ({ messageInput, msgType, msgAgent }: ChatProps) => {
 
         {/* Line Items */}
         <div className="mb-6">
-          <h4 className="font-bold text-blue-200 mb-3">Cost Breakdown</h4>
+          <h4 className="font-bold text-black dark:text-blue-200 mb-3">
+            Cost Breakdown
+          </h4>
           <div className="space-y-3">
             {data.line_items.map((item, index: number) => (
               <div
                 key={index}
-                className="flex justify-between items-center bg-[#3F4854] p-3 rounded"
+                className="flex justify-between items-center dark:bg-[#3F4854] dark:border-0 shadow-md border border-[#d2d2d2] p-3 rounded"
               >
                 <div>
-                  <p className="font-medium">{item.category}</p>
+                  <p className="font-medium text-black dark:text-white">{item.category}</p>
                   <p className="text-xs text-gray-400">{item.description}</p>
                 </div>
                 <p className="font-bold">
@@ -226,32 +242,36 @@ const Chat = ({ messageInput, msgType, msgAgent }: ChatProps) => {
               </div>
             ))}
           </div>
-          <div className="mt-4 pt-3 border-t border-gray-600 flex justify-between font-bold text-lg">
-            <span>Total Estimated Cost</span>
-            <span>{formatCurrency(data.valuation)}</span>
+          <div className="mt-4 pt-3 border-t dark:border-gray-600 flex justify-between font-bold text-lg">
+            <span className="text-black dark:text-white">Total Estimated Cost</span>
+            <span className="text-black dark:text-white">{formatCurrency(data.valuation)}</span>
           </div>
         </div>
 
         {/* Additional Info */}
         <div className="grid grid-cols-2 gap-4 text-xs">
           <div>
-            <p className="text-gray-400">Risk Flags</p>
+            <p className="text-black dark:text-gray-400 ">Risk Flags</p>
             <div className="flex flex-wrap gap-1 mt-1">
               {data.risk_flags.map((flag: string, index: number) => (
                 <span
                   key={index}
-                  className="bg-red-900/50 text-red-300 px-2 py-1 rounded"
+                  className="bg-red-900/50 dark:text-red-300 text-white px-2 py-1 rounded"
                 >
                   {flag.replace(/_/g, " ")}
                 </span>
               ))}
             </div>
           </div>
-          <div>
-            <p className="text-gray-400">Generated By</p>
-            <p>{data.agent_name}</p>
-            <p className="text-gray-400 mt-1">Generated On</p>
-            <p>{formatDate(data.data_timestamp)}</p>
+          <div className="">
+           <div className="flex gap-1">
+             <p className="text-black dark:text-gray-400">Generated By:</p>
+            <p className="dark:text-white text-gray-400">{data.agent_name}</p>
+           </div>
+          <div className="flex gap-1">
+              <p className="text-black dark:text-gray-400 mt-2">Generated On:</p>
+            <p className="dark:text-white text-gray-400">{formatDate(data.data_timestamp)}</p>
+          </div>
           </div>
         </div>
       </div>
@@ -358,7 +378,7 @@ const Chat = ({ messageInput, msgType, msgAgent }: ChatProps) => {
                     stroke-linejoin="round"
                   />
                 </svg>
-                <span class="text-md font-normal text-gray-300">
+                <span class="text-md font-normal text-gray-500 dark:text-gray-300">
                   Processing answer… Please hold on.
                 </span>
               </div>
