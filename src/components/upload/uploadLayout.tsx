@@ -25,11 +25,12 @@ const UploadLayout: React.FC<UploadLayoutProps> = ({
 
   return (
     <div className="flex flex-col items-center justify-center h-full ">
-      <div className="pb-4 md:block hidden">
+      <div className="h-[97vh]">
+        <div className="pb-4 md:block hidden">
         <ConstructIQLogo />
       </div>
       {/* h-[calc(100vh-240px)]                 md:h-[calc(100vh-240px)] h-[calc(100vh-160px)]*/}
-      <div className=" h-[98vh] w-full overflow-auto">
+      <div className="  pb-18 w-full overflow-auto">
         {children}
 
         {chatLayout && (
@@ -42,9 +43,10 @@ const UploadLayout: React.FC<UploadLayoutProps> = ({
           </div>
         )}
       </div>
+      </div>
 
-      <div className="w-full pt-4 relative">
-        <div className="bottom-2 py-2 fixed dark:bg-[#1F1F1F] bg-[#fff] lg:w-[48%] md:w-[80%] w-[88%]">
+      <div className="w-full  relative">
+        <div className="bottom-0 pb-4 py-2 fixed dark:bg-[#1F1F1F] bg-[#fff] lg:w-[48%] md:w-[80%] w-[88%]">
           <div className="relative">
           <input
             className="border border-black dark:border-white opacity-50 w-full h-13 px-4 text-black dark:text-white rounded-sm disabled:bg-[#787879] disabled:cursor-not-allowed"

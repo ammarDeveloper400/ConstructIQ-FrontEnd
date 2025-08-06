@@ -284,7 +284,7 @@ const Chat = ({ messageInput, msgType, msgAgent }: ChatProps) => {
   );
 
   return (
-    <div className="text-white space-y-4 overflow-y-auto">
+    <div className="text-white space-y-4">
       {/* Chat history */}
       {history.map((msg, i) => (
         <>
