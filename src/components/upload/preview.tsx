@@ -104,7 +104,11 @@ const Preview: React.FC<PreviewProps> = ({
           <p className="">{zipCode}</p>
         </div>
       )}
-      <div className={ `flex flex-col justify-center  bg-[#3F4854] ${jasonData === null ? "rounded-[8px]" : "rounded-t-[0px]"} rounded-[8px] px-3 py-3`} >
+      <div
+        className={`flex flex-col justify-center  bg-[#3F4854] ${
+          jasonData === null ? "rounded-[8px]" : "rounded-t-[0px]"
+        } rounded-[8px] px-3 py-3`}
+      >
         <div className="flex items-center justify-between flex-col md:flex-row gap-2">
           <div className="flex items-start gap-1">
             <CiFileOn size={32} color="white" />
@@ -197,11 +201,9 @@ const Preview: React.FC<PreviewProps> = ({
 
               <div className="flex justify-center gap-3 pt-4 text-white font-bold pb-2 text-[14px]">
                 <p>Value Core: Avg: $185K</p>
+                <p className="pl-3 border-l border-[#666a70]">Median: $172K</p>
                 <p className="pl-3 border-l border-[#666a70]">
-                  Value Core: Avg: $185K
-                </p>
-                <p className="pl-3 border-l border-[#666a70]">
-                  Value Core: Avg: $185K
+                  Range: $110K-$120K
                 </p>
               </div>
             </div>

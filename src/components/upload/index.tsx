@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UploadStep1 from "./uploadStep1";
 import UploadLayout from "./uploadLayout";
 import Preview from "./preview";
@@ -11,6 +11,14 @@ const Upload: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
   const [uploadProcessing, setUploadProcessing] = useState(false);
   const [initialScreenning, setInitialScreenning] = useState<boolean>(false);
+
+
+  useEffect(() => {
+    if (file === null) {
+      setUploadProcessing(false);
+      setInitialScreenning(false);
+    }
+  }, [file]);
 
   const handleScreening = () => {
     setInitialScreenning(true);

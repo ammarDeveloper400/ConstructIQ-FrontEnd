@@ -5,6 +5,7 @@ import clipboardIcon from "../icons/clipboard-pen.svg";
 import CopyIcon from "../icons/clipboard-list.svg";
 import ChatHistory from "./chatHistory";
 import { HiOutlineBadgeCheck } from "react-icons/hi";
+import { useNavigate } from "react-router";
 
 type ChatItem = {
   id: number;
@@ -16,25 +17,26 @@ const dummyData: ChatItem[] = [
   { id: 1, icon: CopyIcon, name: "Lorem Ipsum" },
   { id: 2, icon: CopyIcon, name: "Lorem Ipsum" },
   { id: 3, icon: CopyIcon, name: "Lorem Ipsum" },
-  { id: 4, icon: CopyIcon, name: "Lorem Ipsum" },
-  { id: 5, icon: CopyIcon, name: "Lorem Ipsum" },
-  { id: 6, icon: CopyIcon, name: "Lorem Ipsum" },
-  { id: 7, icon: CopyIcon, name: "Lorem Ipsum" },
-  { id: 8, icon: CopyIcon, name: "Lorem Ipsum" },
-  { id: 9, icon: CopyIcon, name: "Lorem Ipsum" },
-  { id: 10, icon: CopyIcon, name: "Lorem Ipsum" },
-  { id: 11, icon: CopyIcon, name: "Lorem Ipsum" },
-  { id: 12, icon: CopyIcon, name: "Lorem Ipsum" },
-  { id: 13, icon: CopyIcon, name: "Lorem Ipsum" },
-  { id: 14, icon: CopyIcon, name: "Lorem Ipsum" },
-  { id: 15, icon: CopyIcon, name: "Lorem Ipsum" },
-  { id: 16, icon: CopyIcon, name: "Lorem Ipsum" },
-  { id: 17, icon: CopyIcon, name: "Lorem Ipsum" },
+  // { id: 4, icon: CopyIcon, name: "Lorem Ipsum" },
+  // { id: 5, icon: CopyIcon, name: "Lorem Ipsum" },
+  // { id: 6, icon: CopyIcon, name: "Lorem Ipsum" },
+  // { id: 7, icon: CopyIcon, name: "Lorem Ipsum" },
+  // { id: 8, icon: CopyIcon, name: "Lorem Ipsum" },
+  // { id: 9, icon: CopyIcon, name: "Lorem Ipsum" },
+  // { id: 10, icon: CopyIcon, name: "Lorem Ipsum" },
+  // { id: 11, icon: CopyIcon, name: "Lorem Ipsum" },
+  // { id: 12, icon: CopyIcon, name: "Lorem Ipsum" },
+  // { id: 13, icon: CopyIcon, name: "Lorem Ipsum" },
+  // { id: 14, icon: CopyIcon, name: "Lorem Ipsum" },
+  // { id: 15, icon: CopyIcon, name: "Lorem Ipsum" },
+  // { id: 16, icon: CopyIcon, name: "Lorem Ipsum" },
+  // { id: 17, icon: CopyIcon, name: "Lorem Ipsum" },
 ];
 
 const AppSidebar: React.FC = () => {
   const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
   const [data, setData] = useState<ChatItem[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setData(dummyData);
@@ -60,6 +62,7 @@ const AppSidebar: React.FC = () => {
           }`}
       >
         <Button
+        onClick={() => navigate('/')}
           variant="primary"
           size="sm"
           className="w-full"

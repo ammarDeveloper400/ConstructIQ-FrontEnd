@@ -17,6 +17,7 @@ const UploadLayout: React.FC<UploadLayoutProps> = ({
   const [messageInput, setMessageInput] = useState("");
   const [messageSend, setMessageSend] = useState("");
   const handleSend = () => {
+    if (!chatLayout) return;
     console.log("Sending message:", messageInput);
     setMessageInput(messageSend);
     setMessageSend("");
@@ -45,10 +46,11 @@ const UploadLayout: React.FC<UploadLayoutProps> = ({
       <div className="w-full pt-4">
         <div className="relative">
           <input
-            className="border border-black dark:border-white opacity-50 w-full h-13 px-4 text-black dark:text-white rounded-sm"
+            className="border border-black dark:border-white opacity-50 w-full h-13 px-4 text-black dark:text-white rounded-sm disabled:bg-[#787879] disabled:cursor-not-allowed"
             type="text"
             placeholder="Ask anything.."
             value={messageSend}
+            disabled =  {!chatLayout}
             onChange={(e) => setMessageSend(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter") {

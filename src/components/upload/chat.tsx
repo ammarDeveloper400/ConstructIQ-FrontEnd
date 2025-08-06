@@ -79,6 +79,7 @@ interface ChatProps {
 const Chat = ({ messageInput, msgType, msgAgent }: ChatProps) => {
   const [history, setHistory] = useState<ChatMessage[]>([]);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const now = new Date().toISOString();
@@ -110,7 +111,7 @@ const Chat = ({ messageInput, msgType, msgAgent }: ChatProps) => {
       agent,
       time: new Date().toISOString(),
     };
-
+    setIsLoading(true);
     setHistory((prev) => [...prev, newMessage]);
 
     setTimeout(() => {
@@ -122,7 +123,8 @@ const Chat = ({ messageInput, msgType, msgAgent }: ChatProps) => {
         time: new Date().toISOString(),
       };
       setHistory((prev) => [...prev, responseMessage]);
-    }, 1000);
+      setIsLoading(false);
+    }, 2000);
   };
 
   const handleSystemClick = (value: string, type: number, agent: string) => {
@@ -130,18 +132,18 @@ const Chat = ({ messageInput, msgType, msgAgent }: ChatProps) => {
   };
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      maximumFractionDigits: 0
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 0,
     }).format(amount);
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   };
 
@@ -150,7 +152,9 @@ const Chat = ({ messageInput, msgType, msgAgent }: ChatProps) => {
       <div className="bg-[#161D26]  rounded-lg p-4 text-sm">
         {/* Project Header */}
         <div className="mb-6">
-          <h3 className="text-lg font-bold text-blue-300 mb-2">Project Estimate</h3>
+          <h3 className="text-lg font-bold text-blue-300 mb-2">
+            Project Estimate
+          </h3>
           <div className="grid grid-cols-2 gap-2">
             <div>
               <p className="text-gray-400">Project ID</p>
@@ -158,7 +162,9 @@ const Chat = ({ messageInput, msgType, msgAgent }: ChatProps) => {
             </div>
             <div>
               <p className="text-gray-400">Location</p>
-              <p>{data.city}, {data.zip_code}</p>
+              <p>
+                {data.city}, {data.zip_code}
+              </p>
             </div>
             <div>
               <p className="text-gray-400">Permit Type</p>
@@ -177,21 +183,26 @@ const Chat = ({ messageInput, msgType, msgAgent }: ChatProps) => {
           <div className="grid grid-cols-3 gap-4 mb-3">
             <div className="bg-[#161D26] p-3 rounded">
               <p className="text-gray-400 text-xs">Total Valuation</p>
-              <p className="text-xl font-bold">{formatCurrency(data.valuation)}</p>
+              <p className="text-xl font-bold">
+                {formatCurrency(data.valuation)}
+              </p>
             </div>
             <div className="bg-[#161D26] p-3 rounded">
               <p className="text-gray-400 text-xs">Confidence</p>
-              <p className="text-xl font-bold">{(data.valuation_confidence_score * 100).toFixed(0)}%</p>
+              <p className="text-xl font-bold">
+                {(data.valuation_confidence_score * 100).toFixed(0)}%
+              </p>
             </div>
             <div className="bg-[#161D26] p-3 rounded">
               <p className="text-gray-400 text-xs">Valuation Range</p>
               <p className="text-sm">
-                {formatCurrency(data.summary.valuation_range.min)} - {formatCurrency(data.summary.valuation_range.max)}
+                {formatCurrency(data.summary.valuation_range.min)} -{" "}
+                {formatCurrency(data.summary.valuation_range.max)}
               </p>
             </div>
           </div>
           <div className="text-xs text-gray-400">
-            <p>Source: {data.valuation_source.replace('_', ' ')}</p>
+            <p>Source: {data.valuation_source.replace("_", " ")}</p>
             <p>Method: {data.valuation_method}</p>
           </div>
         </div>
@@ -201,12 +212,17 @@ const Chat = ({ messageInput, msgType, msgAgent }: ChatProps) => {
           <h4 className="font-bold text-blue-200 mb-3">Cost Breakdown</h4>
           <div className="space-y-3">
             {data.line_items.map((item, index: number) => (
-              <div key={index} className="flex justify-between items-center bg-[#3F4854] p-3 rounded">
+              <div
+                key={index}
+                className="flex justify-between items-center bg-[#3F4854] p-3 rounded"
+              >
                 <div>
                   <p className="font-medium">{item.category}</p>
                   <p className="text-xs text-gray-400">{item.description}</p>
                 </div>
-                <p className="font-bold">{formatCurrency(item.estimated_cost)}</p>
+                <p className="font-bold">
+                  {formatCurrency(item.estimated_cost)}
+                </p>
               </div>
             ))}
           </div>
@@ -222,8 +238,11 @@ const Chat = ({ messageInput, msgType, msgAgent }: ChatProps) => {
             <p className="text-gray-400">Risk Flags</p>
             <div className="flex flex-wrap gap-1 mt-1">
               {data.risk_flags.map((flag: string, index: number) => (
-                <span key={index} className="bg-red-900/50 text-red-300 px-2 py-1 rounded">
-                  {flag.replace(/_/g, ' ')}
+                <span
+                  key={index}
+                  className="bg-red-900/50 text-red-300 px-2 py-1 rounded"
+                >
+                  {flag.replace(/_/g, " ")}
                 </span>
               ))}
             </div>
@@ -267,47 +286,85 @@ const Chat = ({ messageInput, msgType, msgAgent }: ChatProps) => {
   return (
     <div className="text-white space-y-4 overflow-y-auto">
       {/* Chat history */}
-      {history.map((msg) => (
-        <div key={msg.id}>
-          {msg.agent === "system" && msg.type === 1 ? (
-            <SystemMessages
-              type={msg.type}
-              agent={msg.agent}
-              content={msg.content}
-            />
-          ) : (
-            <div
-              className={`flex flex-col ${
-                msg.agent === "user"
-                  ? "justify-end ml-auto text-right items-end"
-                  : "justify-start items-start"
-              }`}
-            >
-              <div className={` ${msg.agent === "user" ? "bg-[#3F4854] px-4 py-2"  : "max-w-full"} rounded-md `}>
-                {msg.content.map((line, i) => (
-                  <div key={i}> 
-                    {msg.type === 2 ? (
-                      <p className="text-white whitespace-pre-wrap text-left break-words">
-                        {typeof line === "string" ? line : JSON.stringify(line, null, 2)}
-                      </p>
-                    ) : (
-                      typeof line === "string" ? (
+      {history.map((msg, i) => (
+        <>
+          <div key={msg.id}>
+            {msg.agent === "system" && msg.type === 1 ? (
+              <SystemMessages
+                type={msg.type}
+                agent={msg.agent}
+                content={msg.content}
+              />
+            ) : (
+              <div
+                className={`flex flex-col ${
+                  msg.agent === "user"
+                    ? "justify-end ml-auto text-right items-end"
+                    : "justify-start items-start"
+                }`}
+              >
+                <div
+                  className={` ${
+                    msg.agent === "user"
+                      ? "bg-[#3F4854] px-4 py-2"
+                      : "max-w-full"
+                  } rounded-md `}
+                >
+                  {msg.content.map((line, i) => (
+                    <div key={i}>
+                      {msg.type === 2 ? (
+                        <p className="text-white whitespace-pre-wrap text-left break-words">
+                          {typeof line === "string"
+                            ? line
+                            : JSON.stringify(line, null, 2)}
+                        </p>
+                      ) : typeof line === "string" ? (
                         <p className="text-white whitespace-pre-wrap text-left break-words">
                           {line}
                         </p>
                       ) : (
                         renderJsonData(line)
-                      )
-                    )}
-                  </div>
-                ))}
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <small className="text-gray-400 block mt-1 text-xs">
+                  {new Date(msg.time).toLocaleTimeString()}
+                </small>
               </div>
-              <small className="text-gray-400 block mt-1 text-xs">
-                {new Date(msg.time).toLocaleTimeString()}
-              </small>
+            )}
+          </div>
+
+          {isLoading && i === history.length - 1 && (
+            <div>
+              <div
+                aria-label="Loading..."
+                role="status"
+                class="flex items-center space-x-2"
+              >
+                <svg
+                  class="h-6 w-8 animate-spin stroke-gray-500"
+                  // width="25"
+                  // height="24"
+                  viewBox="0 0 25 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12.5 2V6M16.7 7.8L19.6 4.9M18.5 12H22.5M16.7 16.2L19.6 19.1M12.5 18V22M5.4 19.1L8.3 16.2M2.5 12H6.5M5.4 4.9L8.3 7.8"
+                    stroke="#797979"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                <span class="text-md font-normal text-gray-300">
+                  Processing answer… Please hold on.
+                </span>
+              </div>
             </div>
           )}
-        </div>
+        </>
       ))}
 
       {/* Scroll anchor */}
