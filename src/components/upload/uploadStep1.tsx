@@ -12,8 +12,10 @@ const UploadStep1: React.FC<UploadStep1> = ({ file, setFile }) => {
   return (
     <div className="display flex flex-col items-center justify-center h-full ">
       <div>
-        <ConstructIQLogo />
-        <p className="text-[14px] mt-6 text-black dark:text-white opacity-50">
+        <div className="md:block hidden">
+          <ConstructIQLogo />
+        </div>
+        <p className="text-[14px] mt-10 md:mt-6 text-black dark:text-white opacity-50">
           Let's estimate your next build faster.
         </p>
       </div>

@@ -25,11 +25,11 @@ const UploadLayout: React.FC<UploadLayoutProps> = ({
 
   return (
     <div className="flex flex-col items-center justify-center h-full ">
-      <div className="pb-4">
+      <div className="pb-4 md:block hidden">
         <ConstructIQLogo />
       </div>
       {/* h-[calc(100vh-240px)] */}
-      <div className="h-[calc(100vh-240px)] w-full overflow-auto">
+      <div className="md:h-[calc(100vh-240px)] h-[calc(100vh-150px)] w-full overflow-auto">
         {children}
 
         {chatLayout && (

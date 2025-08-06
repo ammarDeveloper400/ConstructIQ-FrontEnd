@@ -14,9 +14,9 @@ type ChatItem = {
 };
 
 const dummyData: ChatItem[] = [
-  { id: 1, icon: CopyIcon, name: "Lorem Ipsum" },
-  { id: 2, icon: CopyIcon, name: "Lorem Ipsum" },
-  { id: 3, icon: CopyIcon, name: "Lorem Ipsum" },
+  { id: 1, icon: CopyIcon, name: "Estimate bluePrint" },
+  { id: 2, icon: CopyIcon, name: "Estimate #123" },
+  { id: 3, icon: CopyIcon, name: "BluePrint" },
   // { id: 4, icon: CopyIcon, name: "Lorem Ipsum" },
   // { id: 5, icon: CopyIcon, name: "Lorem Ipsum" },
   // { id: 6, icon: CopyIcon, name: "Lorem Ipsum" },
@@ -44,15 +44,15 @@ const AppSidebar: React.FC = () => {
 
   return (
     <aside
-      className={`fixed mt-16 flex flex-col lg:mt-0 
-    -0 px-5 left-0 bg-white dark:bg-gray-900 dark:border-gray-800 text-gray-900 md:h-screen h-[calc(100vh-4rem)] transition-all duration-300 ease-in-out z-50 border-r border-gray-200 
+      className={`fixed md:mt-16 mt-10 flex flex-col lg:mt-0 
+    -0 px-5 left-0 bg-white dark:bg-gray-900 dark:border-gray-800 text-gray-900 md:h-screen h-[calc(100vh-2.5rem)] transition-all duration-300 ease-in-out z-50 border-r border-gray-200 
     ${isExpanded || isMobileOpen
           ? "w-[290px]"
           : isHovered
             ? "w-[290px]"
             : "w-[90px]"
         }
-    ${isMobileOpen ? "translate-x-0" : "-translate-x-full"}
+    ${isMobileOpen ? "translate-x-0" : "-translate-x-[350px]"}
     lg:translate-x-0`}
       onMouseEnter={() => !isExpanded && setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

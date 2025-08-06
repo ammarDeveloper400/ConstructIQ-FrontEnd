@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <>
       <PageMeta title="Construct IQ" description="Construct IQ" />
-      <div className=" lg:w-[63%] md:w-[80%] w-auto  m-auto">
+      <div className=" lg:w-[63%] md:w-[80%] w-[95%]  m-auto">
         <Upload />
       </div>
       <div className="grid grid-cols-12 gap-4 md:gap-6">

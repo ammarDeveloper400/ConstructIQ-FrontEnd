@@ -109,8 +109,8 @@ const Preview: React.FC<PreviewProps> = ({
           jasonData === null ? "rounded-[8px]" : "rounded-t-[0px]"
         } rounded-[8px] px-3 py-3`}
       >
-        <div className="flex items-center justify-between flex-col md:flex-row gap-2">
-          <div className="flex items-start gap-1">
+        <div className="flex items-center justify-between  flex-col md:flex-row gap-2">
+          <div className="flex items-start gap-1 w-full md:w-auto">
             <CiFileOn size={32} color="white" />
             <div className="flex flex-col gap-[2px]">
               <p className="text-white text-[14px] font-bold w-[190px] truncate">
@@ -136,7 +136,7 @@ const Preview: React.FC<PreviewProps> = ({
             </div>
           </div>
 
-          <div className="flex gap-3 items-center">
+          <div className="flex gap-3 items-center justify-between w-full md:w-auto">
             <div className="flex gap-3 items-center text-xs font-medium text-[#5CA9FF]">
               <button onClick={() => setFile(null)}>Reupload</button>
               <span className="border-l border-[#666a70] h-4" />
@@ -165,7 +165,7 @@ const Preview: React.FC<PreviewProps> = ({
               <p className="text-[14px] font-bold text-white">
                 ⚠ 92% Confident, Outlier Scope
               </p>
-              <div className=" bg-[#1B2430] border-2 border-[#1B2430] rounded-full h-[8px] mt-1 mb-2 w-[50%]">
+              <div className=" bg-[#1B2430] border-2 border-[#1B2430] rounded-full h-[8px] mt-1 mb-2 md:w-[50%] w-[80%]">
                 <div
                   className="bg-green-500 h-full rounded-full "
                   style={{ width: "92%" }}
@@ -199,7 +199,7 @@ const Preview: React.FC<PreviewProps> = ({
                   ))}
               </div>
 
-              <div className="flex justify-center gap-3 pt-4 text-white font-bold pb-2 text-[14px]">
+              <div className="flex flex-wrap justify-center gap-3 pt-4 text-white font-bold pb-2 text-[14px]">
                 <p>Value Core: Avg: $185K</p>
                 <p className="pl-3 border-l border-[#666a70]">Median: $172K</p>
                 <p className="pl-3 border-l border-[#666a70]">
