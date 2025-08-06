@@ -28,8 +28,8 @@ const UploadLayout: React.FC<UploadLayoutProps> = ({
       <div className="pb-4 md:block hidden">
         <ConstructIQLogo />
       </div>
-      {/* h-[calc(100vh-240px)] */}
-      <div className="md:h-[calc(100vh-240px)] h-[calc(100vh-160px)] w-full overflow-auto">
+      {/* h-[calc(100vh-240px)]                 md:h-[calc(100vh-240px)] h-[calc(100vh-160px)]*/}
+      <div className=" h-[98vh] w-full overflow-auto">
         {children}
 
         {chatLayout && (
@@ -43,8 +43,9 @@ const UploadLayout: React.FC<UploadLayoutProps> = ({
         )}
       </div>
 
-      <div className="w-full pt-4">
-        <div className="relative">
+      <div className="w-full pt-4 relative">
+        <div className="bottom-2 py-2 fixed dark:bg-[#1F1F1F] bg-[#fff] lg:w-[48%] md:w-[80%] w-[88%]">
+          <div className="relative">
           <input
             className="border border-black dark:border-white opacity-50 w-full h-13 px-4 text-black dark:text-white rounded-sm disabled:bg-[#787879] disabled:cursor-not-allowed"
             type="text"
@@ -76,6 +77,7 @@ const UploadLayout: React.FC<UploadLayoutProps> = ({
               strokeLinejoin="round"
             />
           </svg>
+        </div>
         </div>
       </div>
     </div>
